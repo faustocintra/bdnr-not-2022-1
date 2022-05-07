@@ -5,6 +5,8 @@ const router = express.Router()
 const controller = require('../controllers/user')
 
 router.post('/', controller.create)
+router.post('/login', controller.login)
+router.post('/logout', controller.logout)
 router.get('/', controller.retrieve)
 router.get('/:id', controller.retrieveOne)
 router.put('/', controller.update)
