@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+
 // Importa o model correspondente
 const Question = require('../models/Question')()
 
@@ -23,6 +25,32 @@ controller.create = async (req, res) => {
 controller.retrieve = async (req, res) => {
     try {
         const result = await Question.find().populate('group')
+        // HTTP 200: OK é implícito aqui
+        res.send(result)
+    }
+    catch(error) {
+        console.error(error)
+        // HTTP 500: Internal Server Error
+        res.status(500).send(error)        
+    }
+}
+
+controller.retrieveByGroup = async (req, res) => {
+    try {
+        const result = await Question.find({group: req.params.groupId}).sort('number')
+        // HTTP 200: OK é implícito aqui
+        res.send(result)
+    }
+    catch(error) {
+        console.error(error)
+        // HTTP 500: Internal Server Error
+        res.status(500).send(error)        
+    }
+}
+
+controller.retrieveByGroupAndNumber = async (req, res) => {
+    try {
+        const result = await Question.findOne({group: req.params.groupId, number: req.params.number})
         // HTTP 200: OK é implícito aqui
         res.send(result)
     }
