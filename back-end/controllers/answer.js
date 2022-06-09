@@ -35,6 +35,22 @@ controller.retrieve = async (req, res) => {
     }
 }
 
+controller.retrieveAnswerByQuestion = async (req, res) => {
+    try {
+        const assessmentId = req.params.assessmentId
+        const questionId = req.params.questionId
+
+        const result = await Answer.findOne({ assessment: assessmentId, question: questionId })
+        // HTTP 200: OK é implícito aqui
+        res.send(result)
+    }
+    catch(error) {
+        console.error(error)
+        // HTTP 500: Internal Server Error
+        res.status(500).send(error)        
+    }
+}
+
 // Função que retorna uma única entrada do glossário
 // com base no id fornecido
 controller.retrieveOne = async (req, res) => {
